@@ -1,6 +1,6 @@
 // import PropTypes from 'prop-types';
 
-export const ContactList = ({ list, onDelete }) => {
+const ContactList = ({ list, onDelete }) => {
   <div>
     <ul>
         {list.map(item => <li key={item.id}>
@@ -19,5 +19,6 @@ export const ContactList = ({ list, onDelete }) => {
   </div>;
 };
 
+export default ContactList
 
 
