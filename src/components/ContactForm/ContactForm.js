@@ -1,15 +1,12 @@
+import PropTypes from 'prop-types';
 import React, { Component } from 'react';
 import { nanoid } from 'nanoid';
-// model.id = nanoid() //=> "V1StGXR8_Z5jdHi6B-myT"
+import { Button, Form, Label, Input } from './ContactForm.styled';
 
 class ContactForm extends Component {
   state = {
     name: '',
     number: '',
-
-    
-    // experience: 'junior',
-    // licence: false,
   };
 
   nameInputId = nanoid();
@@ -25,7 +22,6 @@ class ContactForm extends Component {
     event.preventDefault();
 
     this.props.onSubmit(this.state);
-    // console.log(this.state);
     this.reset();
   };
 
@@ -36,17 +32,12 @@ class ContactForm extends Component {
     });
   };
 
-  // hundleLicenceChange = event => {
-  //   console.log(event.currentTarget.checked);
-  //   this.setState({licence: event.currentTarget.checked})
-  // };
-
   render() {
     return (
-      <form onSubmit={this.handleSubmit}>
-        <label htmlFor={this.nameInputId}>
+      <Form onSubmit={this.handleSubmit}>
+        <Label htmlFor={this.nameInputId}>
           Name
-          <input
+          <Input
             type="text"
             name="name"
             value={this.state.name}
@@ -56,10 +47,10 @@ class ContactForm extends Component {
             id={this.nameInputId}
             required
           />
-        </label>
-        <label htmlFor={this.numberInputId}>
+        </Label>
+        <Label htmlFor={this.numberInputId}>
           Number
-          <input
+          <Input
             type="tel"
             name="number"
             value={this.state.number}
@@ -69,14 +60,18 @@ class ContactForm extends Component {
             id={this.numberInputId}
             required
           />
-        </label>
-        <button type="submit" disabled={!this.state.name}>
+        </Label>
+        <Button type="submit" disabled={!this.state.name}>
           Add contact
-        </button>
-      </form>
+        </Button>
+      </Form>
     );
   }
 }
 
 export default ContactForm;
 
+
+ContactForm.propTypes = {
+  onSubmit: PropTypes.func.isRequired,
+};

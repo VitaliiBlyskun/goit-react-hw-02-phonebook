@@ -1,9 +1,9 @@
 import { nanoid } from 'nanoid';
 import React, { Component } from 'react';
+import { Box } from './Box';
 import ContactForm from './ContactForm/ContactForm';
 import ContactList from './ContactsList/ContactList';
 import Filter from './Filter/Filter';
-
 
 export class App extends Component {
   state = {
@@ -38,41 +38,49 @@ export class App extends Component {
 
     return contacts.filter(contact =>
       contact.name.toLowerCase().includes(normalizedFilter)
-    )
-    
-  }
+    );
+  };
 
-
-  // formSubmitHandler = ({name, number}) => {
-  //   console.log(name + ': ' + number)
-  // }
-
-
-  deleteItem = (itemId) => {
+  deleteItem = itemId => {
     this.setState(prevState => ({
-      contacts: prevState.contacts.filter(item => item.id === itemId)
-    }))
-
-  }
-
+      contacts: prevState.contacts.filter(item => item.id !== itemId),
+    }));
+  };
 
   render() {
     const { contacts, filter } = this.state;
-    const totalContactsCount = contacts.length;
-    console.log(totalContactsCount);
     const visibleContacts = this.getVisibleContacts();
 
     return (
-      <div>
-        <p>Всього контактів: {totalContactsCount} </p>
-        
-        <h1>Phonebook</h1>
-        <ContactForm onSubmit={this.addContact} />
+      <Box
+        as="section"
+        maxWidth="600px"
+        width="80vw"
+        textAlign="center"
+        mx="auto"
+        mt={5}
+        pt={5}
+        bg="white"
+        borderRadius="normal"
+        boxShadow="normal"
+        overflow="hidden"
+      >
+        <Box>
+          <h1>Phonebook</h1>
+          <ContactForm onSubmit={this.addContact} />
+        </Box>
 
-        <h2>Contacts</h2>
-        <Filter value={filter} onChange={this.changeFilter} />
-        <ContactList contacts={visibleContacts} onDelete={this.deleteItem} list={this.getVisibleContacts()}/>
-      </div>
+        <Box mt={10} py={10} px={10} bg="primary">
+          <h2>Contacts</h2>
+          <Filter value={filter} onChange={this.changeFilter} />
+          <ContactList
+            contacts={visibleContacts}
+            onDelete={this.deleteItem}
+            list={this.getVisibleContacts()}
+          />
+        </Box>
+      </Box>
     );
   }
 }
+
